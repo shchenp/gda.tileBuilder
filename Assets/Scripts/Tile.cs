@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TileController : MonoBehaviour
+public class Tile : MonoBehaviour
 {
     [SerializeField] 
     private Renderer[] _renderers;

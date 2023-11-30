@@ -9,8 +9,7 @@ public class MapBuilder : MonoBehaviour
     private Camera _camera;
     private MapController _mapController;
     
-    private GameObject _tile;
-    private TileController _tileController;
+    private Tile _tile;
     private bool _isTileOnMouse;
     
     private Vector3Int _cellPosition;
@@ -46,11 +45,11 @@ public class MapBuilder : MonoBehaviour
     {
         if (_isTileOnMouse)
         {
-            Destroy(_tile);
+            Destroy(_tile.gameObject);
         }
         
-        _tile = Instantiate(tilePrefab);
-        _tileController = _tile.GetComponent<TileController>();
+        var tileObject = Instantiate(tilePrefab);
+        _tile = tileObject.GetComponent<Tile>(); 
         _isTileOnMouse = true;
     }
 
@@ -64,7 +63,7 @@ public class MapBuilder : MonoBehaviour
         _tile.transform.position = cellCenterWorld;
 
         var isCellAvailable = _mapController.IsCellAvailable(cellPosition);
-        _tileController.CheckTileInstallation(isCellAvailable);
+        _tile.CheckTileInstallation(isCellAvailable);
     }
 
     private void TrySetTile()
@@ -73,9 +72,8 @@ public class MapBuilder : MonoBehaviour
         { 
             _mapController.SetCellBusy(_cellPosition);
             
-            _tileController.SetDefaultColor();
+            _tile.SetDefaultColor();
             _tile = null;
-            _tileController = null;
             _isTileOnMouse = false;
         }
     }
